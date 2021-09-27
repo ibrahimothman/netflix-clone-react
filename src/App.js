@@ -1,8 +1,8 @@
+import Home from "./pages/home"
+
 function App() {
   return (
-    <div>
-      Netflix
-    </div>
+    <Home />
   );
 }
 
