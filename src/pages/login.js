@@ -3,8 +3,7 @@ import HeaderContainer from '../containers/header'
 import FooterContainer from '../containers/footer'
 import Form from '../components/form'
 import * as ROUTES from '../constants/routes'
-import FirebaseContext from '../context/firebase'
-import { signInWithEmailAndPassword } from "firebase/auth";
+import AuthContext from '../context/auth'
 import { useHistory } from 'react-router-dom'
 
 function Login() {
@@ -14,15 +13,16 @@ function Login() {
 
     const isInvalid = password === '' || emailAddress === ''
 
-    const { auth } = useContext(FirebaseContext)
+    const { logIn } = useContext(AuthContext)
     const history = useHistory()
 
     const handleLogin = async (e) => {
         e.preventDefault()
         try {
-            const { user } = await signInWithEmailAndPassword(auth, emailAddress, password)
-            history.push(ROUTES.HOME)
+            await logIn({ emailAddress, password })
+            history.push(ROUTES.BROWSE)
         } catch (error) {
+            console.log('error '+error.message)
             setEmailAddress('')
             setPassword('')
             setError(error.message)

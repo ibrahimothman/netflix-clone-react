@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import { Link as ReactRouterLink } from 'react-router-dom'
 import {
     Background,
@@ -8,7 +8,15 @@ import {
     Feature,
     Text,
     PlayButton,
-    FeatureCallOut
+    FeatureCallOut,
+    Link,
+    Group,
+    Picture,
+    Profile,
+    Dropdown,
+    Search,
+    SearchIcon,
+    SearchInput,
 
 } from './styles/header'
 
@@ -30,6 +38,10 @@ Header.Text = ({ children, ...restProps }) => {
     return <Text {...restProps}>{children}</Text>
 }
 
+Header.TextLink = ({ children, ...restProps }) => {
+    return <Link {...restProps}>{children}</Link>
+}
+
 
 Header.PlayButton = ({ children, ...restProps }) => {
     return <PlayButton {...restProps}>{children}</PlayButton>
@@ -37,6 +49,24 @@ Header.PlayButton = ({ children, ...restProps }) => {
 
 Header.Container = ({ children, ...restProps }) => {
     return <Container {...restProps}>{children}</Container>
+}
+
+Header.Group = ({ children, ...restProps }) => {
+    return <Group {...restProps}>{children}</Group>
+}
+
+Header.Picture = ({ ...restProps }) => {
+    return <Picture {...restProps} />
+}
+
+
+
+Header.Profile = ({ children, ...restProps }) => {
+    return <Profile {...restProps}>{children}</Profile>
+}
+
+Header.Dropdown = ({ children, ...restProps }) => {
+    return <Dropdown {...restProps}>{children}</Dropdown>
 }
 
 Header.Logo = ({ to, ...restProps }) => {
@@ -52,5 +82,21 @@ Header.Button = ({ to, children, ...restProps }) => {
         <ButtonLink to={to}>
             {children}
         </ButtonLink>
+    )
+}
+
+
+Header.Search = function HeaderSearch({ searchTerm, setSearchTerm, ...restProps }) {
+    const [isSearchActive, setIsSearchActive] = useState(false)
+    return (
+        <Search {...restProps}>
+            <SearchIcon  onClick={() => setIsSearchActive(prev => !prev)}>
+                <img src="/images/icons/search.png" alt="search" />
+            </SearchIcon>
+            <SearchInput value={searchTerm} onChange={({ target }) => setSearchTerm(target.value)}
+                placeholder="Search films and series"
+                active={isSearchActive}
+            />
+        </Search>
     )
 }

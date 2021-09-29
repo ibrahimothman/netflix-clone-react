@@ -13,7 +13,7 @@ function useContent(target) {
         async function getContentByTarget() {
             const allContent = []
             try {
-                const q = query(collection(db, target), limit(3));
+                const q = query(collection(db, target));
                 const querySnapshot = await getDocs(q);
                 querySnapshot.forEach((doc) => {
                     allContent.push({
@@ -21,7 +21,6 @@ function useContent(target) {
                         ...doc.data()
                     })
                 })
-
                 setContent(allContent)
 
             } catch (error) {
